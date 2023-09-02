@@ -1,6 +1,7 @@
 import "./styles.css";
 import { NewTaskForm } from "./NewTaskForm";
 import { useState } from "react";
+import { TaskList } from "./TaskList";
 
 export default function App() {
     const [tasks, setTasks] = useState([]);
@@ -34,30 +35,7 @@ export default function App() {
         <>
             <NewTaskForm onSubmit={addTask} />
             <h1 className="title"> Todo List </h1>
-            <ul className="task-list">
-                {tasks.length === 0 && "No tasks yet!"}
-                {tasks.map((task) => {
-                    return (
-                        <li className="task" key={task.id}>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    checked={task.isCompleted}
-                                    onChange={(e) => toggleTask(task.id)}
-                                />
-                                {task.name}
-                            </label>
-
-                            <button
-                                onClick={() => deleteTask(task.id)}
-                                className="btn btn-danger"
-                            >
-                                Delete
-                            </button>
-                        </li>
-                    );
-                })}
-            </ul>
+            <TaskList tasks={tasks} toggleTask={toggleTask} deleteTask={deleteTask} />
         </>
     );
 }
