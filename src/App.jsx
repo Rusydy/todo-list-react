@@ -1,11 +1,28 @@
 import "./styles.css"
+import { useState } from "react";
 
 export default function App() {
     const [newTask, setNewTask] = useState("");
+    const [tasks, setTasks] = useState([]);
+
+    function handleSubmit(e) {
+        e.preventDefault();
+
+        setTasks((prevTasks) => {
+            const id = crypto.randomUUID();
+            const name = newTask;
+            const isCompleted = false;
+            const task = { id, name, isCompleted };
+
+            return [...prevTasks, task];
+        });
+
+        setNewTask("");
+    }
 
     return (
     <>
-        <form className="new-task">
+        <form onSubmit={handleSubmit} className="new-task">
             <div className="task-name">
                 <label htmlFor="task-name">Task Name</label>
                 <input 
@@ -19,14 +36,14 @@ export default function App() {
         </form>
         <h1 className="title"> Todo List </h1>
         <ul className="task-list">
-            <li className="task">
-                <label >Task 1</label>
-                <button className="btn btn-danger">Delete</button>
-            </li>
-            <li className="task">
-                <label >Task 2</label>
-                <button className="btn btn-danger">Delete</button>
-            </li>
+            {tasks.map((task) => {
+                return (
+                    <li className="task" key={task.id}>
+                        <label type="checkbox" checked={task.isCompleted} >{task.name}</label>
+                        <button className="btn btn-danger">Delete</button>
+                    </li>
+                )
+            })}
         </ul>
     </>
     )
