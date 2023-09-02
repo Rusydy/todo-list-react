@@ -1,10 +1,18 @@
 import "./styles.css";
 import { NewTaskForm } from "./NewTaskForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TaskList } from "./TaskList";
 
 export default function App() {
-    const [tasks, setTasks] = useState([]);
+    const [tasks, setTasks] = useState(() => {
+        const tasks = JSON.parse(localStorage.getItem("tasks"));
+        if (tasks) return tasks;
+        return [];
+    });
+
+    useEffect(() => {
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+    }, [tasks]);
 
     function addTask(name) {
         setTasks((prevTasks) => {
