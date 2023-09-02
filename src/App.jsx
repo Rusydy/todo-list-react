@@ -1,12 +1,19 @@
 import "./styles.css"
 
 export default function App() {
+    const [newTask, setNewTask] = useState("");
+
     return (
-    <> {/* This is a React fragment. It lets us return multiple elements.*/}
+    <>
         <form className="new-task">
-            <div className="task-name"> {/* className is the React equivalent of class in HTML */}
-                <label htmlFor="task-name">Task Name</label> {/* htmlFor is the React equivalent of for in HTML */}
-                <input type="text" id="task-name" />
+            <div className="task-name">
+                <label htmlFor="task-name">Task Name</label>
+                <input 
+                    value={newTask}
+                    onChange={(e) => setNewTask(e.target.value)}
+                    type="text" 
+                    id="task-name" 
+                />
             </div>
             <button className="btn" >Add Task</button>
         </form>
