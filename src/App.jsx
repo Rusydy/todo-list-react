@@ -31,6 +31,12 @@ export default function App() {
         });
     }
 
+    function deleteTask(id) {
+        setTasks((prevTasks) => {
+            return prevTasks.filter((task) => task.id !== id);
+        });
+    }
+
     return (
         <>
             <form onSubmit={handleSubmit} className="new-task">
