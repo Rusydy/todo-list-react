@@ -20,11 +20,11 @@ export default function App() {
         setNewTask("");
     }
 
-    function toggleTask(id, isCompleted) {
+    function toggleTask(id) {
         setTasks((prevTasks) => {
             return prevTasks.map((task) => {
                 if (task.id === id) {
-                    return { ...task, isCompleted };
+                    return { ...task, isCompleted: !task.isCompleted };
                 }
                 return task;
             });
@@ -54,9 +54,7 @@ export default function App() {
                                 <input
                                     type="checkbox"
                                     checked={task.isCompleted}
-                                    onChange={(e) =>
-                                        toggleTask(task.id, e.target.checked)
-                                    }
+                                    onChange={(e) => toggleTask(task.id)}
                                 />
                                 {task.name}
                             </label>
