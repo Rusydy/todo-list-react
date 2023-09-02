@@ -20,6 +20,17 @@ export default function App() {
         setNewTask("");
     }
 
+    function toggleTask(id, isCompleted) {
+        setTasks((prevTasks) => {
+            return prevTasks.map((task) => {
+                if (task.id === id) {
+                    return { ...task, isCompleted };
+                } 
+                    return task;
+            });
+        });
+    }
+
     return (
     <>
         <form onSubmit={handleSubmit} className="new-task">
@@ -39,7 +50,11 @@ export default function App() {
             {tasks.map((task) => {
                 return (
                     <li className="task" key={task.id}>
-                        <label type="checkbox" checked={task.isCompleted} >{task.name}</label>
+                        <label>
+                            <input type="checkbox" checked={task.isCompleted} onChange={(e) => toggleTask(task.id, e.target.checked)} />
+                            {task.name}
+                        </label>
+
                         <button className="btn btn-danger">Delete</button>
                     </li>
                 )
