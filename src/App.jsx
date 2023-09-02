@@ -1,23 +1,16 @@
 import "./styles.css";
+import { NewTaskForm } from "./NewTaskForm";
 import { useState } from "react";
 
 export default function App() {
-    const [newTask, setNewTask] = useState("");
     const [tasks, setTasks] = useState([]);
 
-    function handleSubmit(e) {
-        e.preventDefault();
-
+    function addTask(name) {
         setTasks((prevTasks) => {
-            const id = crypto.randomUUID();
-            const name = newTask;
-            const isCompleted = false;
-            const task = { id, name, isCompleted };
+            const task = { id: crypto.randomUUID(), name, isCompleted: false };
 
             return [...prevTasks, task];
         });
-
-        setNewTask("");
     }
 
     function toggleTask(id) {
@@ -39,18 +32,7 @@ export default function App() {
 
     return (
         <>
-            <form onSubmit={handleSubmit} className="new-task">
-                <div className="task-name">
-                    <label htmlFor="task-name">Task Name</label>
-                    <input
-                        value={newTask}
-                        onChange={(e) => setNewTask(e.target.value)}
-                        type="text"
-                        id="task-name"
-                    />
-                </div>
-                <button className="btn">Add Task</button>
-            </form>
+            <NewTaskForm onSubmit={addTask} />
             <h1 className="title"> Todo List </h1>
             <ul className="task-list">
                 {tasks.length === 0 && "No tasks yet!"}
